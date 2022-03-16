@@ -21,7 +21,7 @@ class Graph {
 
         bool add_node(int id);
         bool add_edge(int idx, int dst, int w);
-        int shortest_path(int src, int dst);
+        void shortest_path(int src, int dst);
         int min_span_tree();
         string show_nodes();
 };

@@ -1,6 +1,4 @@
 #include <iostream>
-#include <string.h>
-#include <vector>
 
 #include "graph_node.hpp"
 #include "graph.hpp"

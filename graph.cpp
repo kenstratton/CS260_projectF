@@ -31,8 +31,7 @@ bool Graph::add_edge(int idx, int dst, int w) {
     return true;
 }
 
-
-int Graph::shortest_path(int src, int dst){
+void Graph::shortest_path(int src, int dst){
     vector<vector<int>> matrix;
     vector<int> edges;
     bool is_inf;
@@ -56,8 +55,6 @@ int Graph::shortest_path(int src, int dst){
 
     ShortestPath sp;
     sp.calc_path(node_num, matrix, 0);
-
-    return 1;
 }
 
 int Graph::min_span_tree(){
