@@ -13,15 +13,15 @@ class Graph {
 
     public:
         Graph(int n) {
-            this->node_num = n;
+            node_num = n;
             for(int i=0; i<n; i++){
-                add_node();
+                add_node(i);
             }
         }
 
-        bool add_node();
+        bool add_node(int id);
         bool add_edge(int idx, int dst, int w);
-        string shortest_path();
+        int shortest_path(int src, int dst);
         int min_span_tree();
         string show_nodes();
 };

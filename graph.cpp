@@ -1,36 +1,81 @@
+#include <iostream>
 #include <string>
 
 #include "graph.hpp"
 #include "min_span_tree.hpp"
+#include "shortest_path.hpp"
 
 using namespace std;
 
 
-bool Graph::add_node() {
-    Graph_node *new_node = new Graph_node{};
-    this->nodes.push_back(new_node);
+bool Graph::add_node(int id) {
+    Graph_node *new_node = new Graph_node{id};
+    nodes.push_back(new_node);
     return true;
 }
 
 bool Graph::add_edge(int idx, int dst, int w) {
-    this->nodes[idx]->add_edge(dst, w);
+    bool exst = false;
+    for(auto edge: nodes[idx]->edges){
+        if(edge[0]==dst){
+            exst = true;
+            break;
+        }
+    }
+    if(exst){
+        nodes[idx]->erase_edge(dst);
+        nodes[dst]->erase_edge(idx);
+    }
+    nodes[idx]->add_edge(dst, w);
+    nodes[dst]->add_edge(idx, w);
     return true;
 }
 
 
-// string Graph::shortest_path(){}
+int Graph::shortest_path(int src, int dst){
+    vector<vector<int>> matrix;
+    vector<int> edges;
+    bool is_inf;
+    int inf = 0;
+
+    for(auto node: nodes){
+        edges.clear();
+        for(int i=0; i<node_num; i++){
+            is_inf = true;
+            for(auto edge: node->edges){
+                if(edge[0]==i) {
+                    edges.push_back(edge[1]);
+                    is_inf = false;
+                    break;
+                }
+            }
+            if(is_inf) edges.push_back(inf);
+        }
+        matrix.push_back(edges);
+    }
+
+    ShortestPath sp;
+    sp.calc_path(node_num, matrix, 0);
+
+    return 1;
+}
 
 int Graph::min_span_tree(){
     int min_cost = 0;
 
     vector<vector<int>> all_edges;
-    for(auto node: this->nodes){
-        for(int i=0; i<node->edges.size(); i++){
-            all_edges.push_back({node->edges[i][1], i, node->edges[i][0]});
+    vector<vector<int>> all_dst;
+    for(int i=0; i<node_num; i++){
+        all_dst.push_back({});
+    }
+
+    for(auto node: nodes){
+        for(auto edge: node->edges){
+            all_edges.push_back({edge[1], node->id, edge[0]});
         }
     }
     sort(all_edges.begin(), all_edges.end());
-    MinSpanTree mst(this->node_num);
+    MinSpanTree mst(node_num);
 
     for (int i=0; i < all_edges.size(); i++) {
         vector<int> edge = all_edges[i];
@@ -46,10 +91,10 @@ int Graph::min_span_tree(){
 
 string Graph::show_nodes() {
     string result = "";
-    for(int i=0; i<this->nodes.size(); i++) {
-        result += "▼ Node " + to_string(i);
+    for(auto node: nodes) {
+        result += "▼ Node " + to_string(node->id);
         result += "\n";
-        result += this->nodes[i]->show_edge();
+        result += node->show_edge();
     }
     return result;
 }
