@@ -11,11 +11,7 @@ class Graph {
     vector<Graph_node *> nodes;
 
     public:
-        Graph (int n) {
-            for (int i=0; i<n; i++) {
-                add_node(i);
-            }
-        }
+        Graph (int n) { for (int i=0; i<n; i++) add_node(i); }
 
         bool add_node (int id);
         int get_node_size ();
