@@ -14,24 +14,24 @@ bool Graph::add_node(int id) {
     return true;
 }
 
-bool Graph::add_edge(int idx, int dst, int w) {
+vector<int> Graph::add_edge(int idx, int dst, int w) {
     bool exst = false;
-    for(auto edge: nodes[idx]->edges){
+    for(auto edge: nodes[idx]->edges) {
         if(edge[0]==dst){
             exst = true;
             break;
         }
     }
-    if(exst){
+    if(exst) {
         nodes[idx]->erase_edge(dst);
         nodes[dst]->erase_edge(idx);
     }
-    nodes[idx]->add_edge(dst, w);
+    vector<int> e = nodes[idx]->add_edge(dst, w);
     nodes[dst]->add_edge(idx, w);
-    return true;
+    return e;
 }
 
-void Graph::shortest_path(int src, int dst){
+vector<int> Graph::shortest_path(int src) {
     vector<vector<int>> matrix;
     vector<int> edges;
     bool is_inf;
@@ -39,9 +39,9 @@ void Graph::shortest_path(int src, int dst){
 
     for(auto node: nodes){
         edges.clear();
-        for(int i=0; i<node_num; i++){
+        for(int i=0; i<node_num; i++) {
             is_inf = true;
-            for(auto edge: node->edges){
+            for(auto edge: node->edges) {
                 if(edge[0]==i) {
                     edges.push_back(edge[1]);
                     is_inf = false;
@@ -54,20 +54,25 @@ void Graph::shortest_path(int src, int dst){
     }
 
     ShortestPath sp;
-    sp.calc_path(node_num, matrix, 0);
+    vector<int> dstV = sp.calc_path(node_num, matrix, src);
+    cout << "▼ Source : " << src << endl;
+    cout << "Goal - Distance" << endl;
+    for(int i = 0; i<node_num; i++) cout << "[" << i << "]" << " - " << dstV[i] <<endl;
+
+    return dstV;
 }
 
-int Graph::min_span_tree(){
+int Graph::min_span_tree() {
     int min_cost = 0;
 
     vector<vector<int>> all_edges;
     vector<vector<int>> all_dst;
-    for(int i=0; i<node_num; i++){
+    for(int i=0; i<node_num; i++) {
         all_dst.push_back({});
     }
 
-    for(auto node: nodes){
-        for(auto edge: node->edges){
+    for(auto node: nodes) {
+        for(auto edge: node->edges) {
             all_edges.push_back({edge[1], node->id, edge[0]});
         }
     }

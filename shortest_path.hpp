@@ -15,7 +15,7 @@ struct ShortestPath {
         return idx;
     }
 
-    void calc_path(int v, vector<vector<int>> matrix, int src) {
+    vector<int> calc_path(int v, vector<vector<int>> matrix, int src) {
         int dst[v];
         bool mrk[v];
 
@@ -36,10 +36,9 @@ struct ShortestPath {
                     dst[i] = dst[min] + matrix[min][i];
             }
         }
-        cout << "▼ Source : " << src << endl;
-        cout << "Goal - Distance" << endl;
-        for(int i = 0; i<v; i++) {
-            cout << "[" << i << "]" << " - " << dst[i] <<endl;
-        }
+
+        vector<int> dstV;
+        for(auto d: dst) dstV.push_back(d);
+        return dstV;
     }
 };

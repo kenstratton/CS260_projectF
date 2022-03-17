@@ -20,8 +20,8 @@ class Graph {
         }
 
         bool add_node(int id);
-        bool add_edge(int idx, int dst, int w);
-        void shortest_path(int src, int dst);
+        vector<int> add_edge(int idx, int dst, int w);
+        vector<int> shortest_path(int src);
         int min_span_tree();
         string show_nodes();
 };

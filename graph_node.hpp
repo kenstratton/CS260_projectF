@@ -12,11 +12,14 @@ struct Graph_node {
 public:
     Graph_node(int id){ this->id=id; }
 
-    void add_edge(int dst, int w) {
+    vector<int> add_edge(int dst, int w) {
         vector<int> edge;
         edge.push_back(dst);
         edge.push_back(w);
         edges.push_back(edge);
+
+        vector<int> v{w, id , dst};
+        return v;
     }
 
     void erase_edge(int dst){
