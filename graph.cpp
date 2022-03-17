@@ -8,21 +8,25 @@
 using namespace std;
 
 
-bool Graph::add_node(int id) {
+bool Graph::add_node (int id) {
     Graph_node *new_node = new Graph_node{id};
     nodes.push_back(new_node);
     return true;
 }
 
-vector<int> Graph::add_edge(int idx, int dst, int w) {
+int Graph::get_node_size () {
+    return nodes.size();
+}
+
+vector<int> Graph::add_edge (int idx, int dst, int w) {
     bool exst = false;
-    for(auto edge: nodes[idx]->edges) {
-        if(edge[0]==dst){
+    for (auto edge: nodes[idx]->edges) {
+        if (edge[0]==dst){
             exst = true;
             break;
         }
     }
-    if(exst) {
+    if (exst) {
         nodes[idx]->erase_edge(dst);
         nodes[dst]->erase_edge(idx);
     }
@@ -31,53 +35,53 @@ vector<int> Graph::add_edge(int idx, int dst, int w) {
     return e;
 }
 
-vector<int> Graph::shortest_path(int src) {
+vector<int> Graph::shortest_path (int src) {
     vector<vector<int>> matrix;
     vector<int> edges;
     bool is_inf;
     int inf = 0;
 
-    for(auto node: nodes){
+    for (auto node: nodes) {
         edges.clear();
-        for(int i=0; i<node_num; i++) {
+        for (int i=0; i<get_node_size(); i++) {
             is_inf = true;
-            for(auto edge: node->edges) {
-                if(edge[0]==i) {
+            for (auto edge: node->edges) {
+                if (edge[0]==i) {
                     edges.push_back(edge[1]);
                     is_inf = false;
                     break;
                 }
             }
-            if(is_inf) edges.push_back(inf);
+            if (is_inf) edges.push_back(inf);
         }
         matrix.push_back(edges);
     }
 
     ShortestPath sp;
-    vector<int> dstV = sp.calc_path(node_num, matrix, src);
+    vector<int> dstV = sp.calc_path(get_node_size(), matrix, src);
     cout << "▼ Source : " << src << endl;
     cout << "Goal - Distance" << endl;
-    for(int i = 0; i<node_num; i++) cout << "[" << i << "]" << " - " << dstV[i] <<endl;
+    for (int i = 0; i<get_node_size(); i++) cout << "[" << i << "]" << " - " << dstV[i] <<endl;
 
     return dstV;
 }
 
-int Graph::min_span_tree() {
+int Graph::min_span_tree () {
     int min_cost = 0;
 
     vector<vector<int>> all_edges;
     vector<vector<int>> all_dst;
-    for(int i=0; i<node_num; i++) {
+    for (int i=0; i<get_node_size(); i++) {
         all_dst.push_back({});
     }
 
-    for(auto node: nodes) {
-        for(auto edge: node->edges) {
+    for (auto node: nodes) {
+        for (auto edge: node->edges) {
             all_edges.push_back({edge[1], node->id, edge[0]});
         }
     }
     sort(all_edges.begin(), all_edges.end());
-    MinSpanTree mst(node_num);
+    MinSpanTree mst(get_node_size());
 
     for (int i=0; i < all_edges.size(); i++) {
         vector<int> edge = all_edges[i];
@@ -91,9 +95,9 @@ int Graph::min_span_tree() {
 }
 
 
-string Graph::show_nodes() {
+string Graph::show_nodes () {
     string result = "";
-    for(auto node: nodes) {
+    for (auto node: nodes) {
         result += "▼ Node " + to_string(node->id);
         result += "\n";
         result += node->show_edge();

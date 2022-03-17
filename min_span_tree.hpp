@@ -7,16 +7,16 @@ struct MinSpanTree {
     vector<int> parent;
     vector<int> data_sizes;
 
-    MinSpanTree(int n)
+    MinSpanTree (int n)
         : parent(n), data_sizes(n, 1)
         { for (int i=0; i < n; i++) parent[i] = i;}
 
-    int find(int i) {
+    int find (int i) {
         if (i == parent[i]) return i;
         return parent[i] = find(parent[i]);
     }
 
-    void merge(int x, int y) {
+    void merge (int x, int y) {
         x = find(x);
         y = find(y);
 

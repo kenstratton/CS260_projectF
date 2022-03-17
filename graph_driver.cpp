@@ -9,9 +9,13 @@
 
 using namespace std;
 
-void test_graph(){
+void test_graph () {
     Graph g(V);
     vector<int> e;
+
+    cout << "Tests start...\n" << endl;
+
+    assert(g.get_node_size() == V);
 
     e = g.add_edge(0, 1, 12);
     vector<int> v1{12, 0, 1};
@@ -54,8 +58,10 @@ void test_graph(){
     assert(dstV[1] == 0);
     assert(dstV[2] == 2);
     assert(dstV[3] == 12);
+
+    cout << "\nTests done..." << endl;
 }
 
-int main() {
+int main () {
     test_graph();
 }
