@@ -14,11 +14,13 @@ public:
 
     vector<int> add_edge (int dst, int w) {
         vector<int> edge;
+
         edge.push_back(dst);
         edge.push_back(w);
         edges.push_back(edge);
 
         vector<int> v{w, id , dst};
+
         return v;
     }
 
@@ -32,6 +34,7 @@ public:
     // Print node info1 (stored destinations and their costs)
     string show_edge () {
         string result = "";
+
         for (auto edge: edges) {
             result += "destination: " + to_string(edge[0]);
             result += " weight: " + to_string(edge[1]);

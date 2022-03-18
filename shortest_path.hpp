@@ -8,6 +8,7 @@ struct ShortestPath {
     // Return a minimum distance for a specified node
     int min_dst (int v, int dst[], bool mrk[]) {
         int min = INT_MAX,idx;
+
         for (int i=0; i<v; i++) {
             // Check if the node isnt marked as unpassed
             if (mrk[i]==false && dst[i]<=min) {
@@ -15,6 +16,7 @@ struct ShortestPath {
                 idx=i;
             }
         }
+
         return idx;
     }
 
@@ -45,6 +47,7 @@ struct ShortestPath {
 
         vector<int> dstV;
         for (auto d: dst) dstV.push_back(d);
+
         return dstV;
     }
 };

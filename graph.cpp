@@ -10,7 +10,9 @@ using namespace std;
 // Generate a node instance and push into a node list
 bool Graph::add_node (int id) {
     Graph_node *new_node = new Graph_node{id};
+
     nodes.push_back(new_node);
+
     return true;
 }
 
@@ -22,18 +24,22 @@ int Graph::get_node_size () {
 // Hand destination between two nodes to the two node
 vector<int> Graph::add_edge (int idx, int dst, int w) {
     bool exst = false;
+
     for (auto edge: nodes[idx]->edges) {
         if (edge[0]==dst){
             exst = true;
             break;
         }
     }
+
     if (exst) { // If already existing, edge data is deleted to upadate
         nodes[idx]->erase_edge(dst);
         nodes[dst]->erase_edge(idx);
     }
+
     vector<int> e = nodes[idx]->add_edge(dst, w);
     nodes[dst]->add_edge(idx, w);
+
     return e;
 }
 
@@ -68,6 +74,7 @@ vector<int> Graph::shortest_path (int src) {
     // *2
     ShortestPath sp;
     vector<int> dstV = sp.calc_path(get_node_size(), matrix, src);
+
     cout << "▼ Source : " << src << endl;
     cout << "Goal - Distance" << endl;
     for (int i = 0; i<get_node_size(); i++) cout << "[" << i << "]" << " - " << dstV[i] <<endl;
@@ -95,9 +102,10 @@ int Graph::min_span_tree () {
         }
     }
     sort(all_edges.begin(), all_edges.end());
-    MinSpanTree mst(get_node_size());
 
     // * 2
+    MinSpanTree mst(get_node_size());
+
     for (int i=0; i < all_edges.size(); i++) {
         vector<int> edge = all_edges[i];
         // * 3
@@ -114,10 +122,12 @@ int Graph::min_span_tree () {
 // Print each node info
 string Graph::show_nodes () {
     string result = "";
+
     for (auto node: nodes) {
         result += "▼ Node " + to_string(node->id);
         result += "\n";
         result += node->show_edge();
     }
+
     return result;
 }
