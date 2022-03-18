@@ -6,8 +6,8 @@
 using namespace std;
 
 struct Graph_node {
-    vector <vector<int>> edges;
-    int id;
+    vector <vector<int>> edges; // destination
+    int id; // identification for each node
 
 public:
     Graph_node(int id){ this->id=id; }
@@ -22,12 +22,14 @@ public:
         return v;
     }
 
+    // Erase edge data (a stored destination)
     void erase_edge (int dst) {
         for (int i=0; i<edges.size(); i++) {
             if (edges[i][0] == dst) edges.erase(edges.begin()+i);
         }
     }
 
+    // Print node info1 (stored destinations and their costs)
     string show_edge () {
         string result = "";
         for (auto edge: edges) {

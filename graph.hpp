@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// Graph class to draw a graph and give behaviors
 class Graph {
     vector<Graph_node *> nodes;
 

@@ -6,17 +6,25 @@
 
 #define V 4
 
-
 using namespace std;
 
+/*******************************************
+Test fuction :
+ * 1. Test addition of nodes
+ * 2. Test addition of edges
+ * 3. Test calculation of the minimum spannning tree
+ * 4. Test calculation of the shortest paths
+********************************************/
 void test_graph () {
     Graph g(V);
     vector<int> e;
 
     cout << "Tests start...\n" << endl;
 
+    // * 1
     assert(g.get_node_size() == V);
 
+    // * 2
     e = g.add_edge(0, 1, 12);
     vector<int> v1{12, 0, 1};
     assert(e == v1);
@@ -49,10 +57,12 @@ void test_graph () {
           10
     *************/
 
+    // * 3
     int m = g.min_span_tree();
     assert(m == 13);
     cout << "min_tree : " << m << "\n" <<endl;
 
+    // * 4
     vector<int> dstV = g.shortest_path(1);
     assert(dstV[0] == 7);
     assert(dstV[1] == 0);
