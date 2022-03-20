@@ -4,7 +4,7 @@
 using namespace std;
 
 /*******************************************
-Shortest-path fuction :
+Minimum spanning tree fuction :
  * 1. Generate edge matrix (node id is stored as destination, 0->no link)
  * 2. Execute the shortest path algorithm with the matrix (*1)
 ********************************************/
